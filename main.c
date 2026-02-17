@@ -14,7 +14,7 @@ int main()
     int i, n;
     FILE *fp;
 
-    char path[500] = "data/1000.txt";
+    char path[500] = "data/random100.txt";
 
     fp = fopen(path, "r");
     fscanf(fp, "%d", &n);
@@ -56,4 +56,5 @@ int main()
 
     return 0;
 }
+
 
