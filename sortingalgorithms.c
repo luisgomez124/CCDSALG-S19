@@ -62,10 +62,10 @@ int partition(Record *arr, int low, int high)
         if (arr[j].idNumber <= pivot)
         {
             i++;
-            swapRecord(&arr[i], &arr[j]);
+            swapRecords(&arr[i], &arr[j]);
         }
     }
-    swapRecords(&arr[i + 1] &arr[high]);
+    swapRecords(&arr[i + 1], &arr[high]);
     return i + 1;
 }
 
