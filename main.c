@@ -5,67 +5,54 @@
 #include <stdio.h>
 #include <string.h>
 
-void copyRecords(Record *dst, Record *src, int n)
-{
-    int i;
-    for (i = 0; i < n; i++)
-        dst[i] = src[i];
-}
+Record records[10000];
+Record copy[10000];
 
 int main()
 {
-    static Record original[MAX_RECORDS];
-    static Record working[MAX_RECORDS];
     long startTime, endTime, executionTime;
+    int i, n;
+    FILE *fp;
 
-    char *files[] = {
-        "data/10.txt",
-        "data/100.txt",
-        "data/1000.txt",
-        "data/10000.txt",
-        "data/100000.txt"
-    };
-    int numFiles = 5;
-    int f, n;
+    char path[500] = "data/1000.txt";
 
-    for (f = 0; f < numFiles; f++)
-    {
-        FILE *fp = fopen(files[f], "r");
-        if (!fp) { printf("Cannot open %s\n", files[f]); continue; }
-        fscanf(fp, "%d", &n);
-        fclose(fp);
+    fp = fopen(path, "r");
+    fscanf(fp, "%d", &n);
+    fclose(fp);
 
-        readFile(original, files[f]);
-        printf("\n--- %s (n=%d) ---\n", files[f], n);
+    readFile(records, path);
 
-        copyRecords(working, original, n);
-        startTime = currentTimeMillis();
-        insertionSort(working, n);
-        endTime = currentTimeMillis();
-        executionTime = endTime - startTime;
-        printf("Insertion Sort: %ld ms\n", executionTime);
+    // insertion sort
+    for (i = 0; i < n; i++) copy[i] = records[i];
+    startTime = currentTimeMillis();
+    insertionSort(copy, n);
+    endTime = currentTimeMillis();
+    executionTime = endTime - startTime;
+    printf("Insertion Sort: %ld ms\n", executionTime);
 
-        copyRecords(working, original, n);
-        startTime = currentTimeMillis();
-        selectionSort(working, n);
-        endTime = currentTimeMillis();
-        executionTime = endTime - startTime;
-        printf("Selection Sort: %ld ms\n", executionTime);
+    // selection sort
+    for (i = 0; i < n; i++) copy[i] = records[i];
+    startTime = currentTimeMillis();
+    selectionSort(copy, n);
+    endTime = currentTimeMillis();
+    executionTime = endTime - startTime;
+    printf("Selection Sort: %ld ms\n", executionTime);
 
-        copyRecords(working, original, n);
-        startTime = currentTimeMillis();
-        mergeSort(working, 0, n - 1);
-        endTime = currentTimeMillis();
-        executionTime = endTime - startTime;
-        printf("Merge Sort:     %ld ms\n", executionTime);
+    // merge sort
+    for (i = 0; i < n; i++) copy[i] = records[i];
+    startTime = currentTimeMillis();
+    mergeSort(copy, 0, n - 1);
+    endTime = currentTimeMillis();
+    executionTime = endTime - startTime;
+    printf("Merge Sort: %ld ms\n", executionTime);
 
-        copyRecords(working, original, n);
-        startTime = currentTimeMillis();
-        quickSort(working, 0, n - 1);
-        endTime = currentTimeMillis();
-        executionTime = endTime - startTime;
-        printf("Quick Sort:     %ld ms\n", executionTime);
-    }
+    // quick sort
+    for (i = 0; i < n; i++) copy[i] = records[i];
+    startTime = currentTimeMillis();
+    quickSort(copy, 0, n - 1);
+    endTime = currentTimeMillis();
+    executionTime = endTime - startTime;
+    printf("Quick Sort: %ld ms\n", executionTime);
 
     return 0;
 }
