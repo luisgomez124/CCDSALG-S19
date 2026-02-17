@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 
-Record records[10000];
-Record copy[10000];
+Record records[100000];
+Record copy[100000];
 
 int main()
 {
@@ -56,3 +56,4 @@ int main()
 
     return 0;
 }
+
